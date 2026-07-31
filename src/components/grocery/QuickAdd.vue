@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useCategoriesStore } from '@/stores/categories'
 import { useFavoritesStore } from '@/stores/favorites'
 import { OTHERS_CATEGORY_ID } from '@/services/categories.data'
 import { guessCategoryId } from '@/services/categoryKeywords.data'
 import BaseSheet from '@/components/ui/BaseSheet.vue'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 export interface QuickAddValue {
   name: string
@@ -25,6 +26,7 @@ const favorites = useFavoritesStore()
 let timer: ReturnType<typeof setTimeout> | undefined
 
 const selectedCategory = () => categories.get(selectedCategoryId.value)
+const canExpand = computed(() => !!value.value.trim())
 
 // Auto-pick a category from what the user types (favorites history first, then
 // a keyword guess) until they choose one manually.
@@ -93,12 +95,15 @@ function expand() {
       >
     </Transition>
     <button
-      v-if="value.trim()"
       type="button"
-      class="tap-scale shrink-0 rounded-lg px-2 py-1 text-xs font-medium text-content-subtle hover:bg-surface-hover"
-      :title="t('quickAdd.detailsTitle')"
+      data-testid="quickadd-details-button"
+      class="tap-scale inline-flex shrink-0 items-center gap-1 rounded-lg border border-line px-2 py-1 text-xs font-semibold text-content-muted transition-colors enabled:hover:border-primary-300 enabled:hover:bg-surface-hover enabled:hover:text-content disabled:cursor-not-allowed disabled:opacity-45"
+      :title="canExpand ? t('quickAdd.detailsTitle') : t('quickAdd.detailsDisabledTitle')"
+      :aria-label="canExpand ? t('quickAdd.detailsTitle') : t('quickAdd.detailsDisabledTitle')"
+      :disabled="!canExpand"
       @click="expand"
     >
+      <AppIcon name="more" :size="14" />
       {{ t('quickAdd.details') }}
     </button>
     <button
