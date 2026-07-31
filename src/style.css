@@ -1,0 +1,191 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* Emerald primary scale (stable across themes) */
+  --color-primary-50: #ecfdf5;
+  --color-primary-100: #d1fae5;
+  --color-primary-200: #a7f3d0;
+  --color-primary-300: #6ee7b7;
+  --color-primary-400: #34d399;
+  --color-primary-500: #10b981;
+  --color-primary-600: #059669;
+  --color-primary-700: #047857;
+
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+
+  /* Semantic, theme-aware tokens (light defaults; overridden for dark below) */
+  --color-canvas: #fafafa;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f4f4f5;
+  --color-surface-hover: #f4f4f5;
+  --color-line: #e8e8ea;
+  --color-content: #171717;
+  --color-content-muted: #52525b;
+  --color-content-subtle: #6b7280;
+  --color-primary-soft: #ecfdf5;
+  --color-primary-soft-hover: #d1fae5;
+  --color-primary-strong: #047857;
+
+  --shadow-soft: 0 1px 2px rgba(16, 24, 40, 0.04), 0 4px 16px rgba(16, 24, 40, 0.06);
+  --shadow-lift: 0 8px 30px rgba(16, 24, 40, 0.12);
+}
+
+/* Primary color themes. These unlayered attribute selectors override the
+   Emerald defaults from @theme when <html data-theme="…"> is set. Only the
+   primary palette and its soft/strong tokens change; neutrals stay the same.
+   They are placed before the dark block so the dark overrides still win. */
+[data-theme='blue'] {
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-soft: #eff6ff;
+  --color-primary-soft-hover: #dbeafe;
+  --color-primary-strong: #1d4ed8;
+}
+
+[data-theme='violet'] {
+  --color-primary-50: #f5f3ff;
+  --color-primary-100: #ede9fe;
+  --color-primary-200: #ddd6fe;
+  --color-primary-300: #c4b5fd;
+  --color-primary-400: #a78bfa;
+  --color-primary-500: #8b5cf6;
+  --color-primary-600: #7c3aed;
+  --color-primary-700: #6d28d9;
+  --color-primary-soft: #f5f3ff;
+  --color-primary-soft-hover: #ede9fe;
+  --color-primary-strong: #6d28d9;
+}
+
+[data-theme='rose'] {
+  --color-primary-50: #fff1f2;
+  --color-primary-100: #ffe4e6;
+  --color-primary-200: #fecdd3;
+  --color-primary-300: #fda4af;
+  --color-primary-400: #fb7185;
+  --color-primary-500: #f43f5e;
+  --color-primary-600: #e11d48;
+  --color-primary-700: #be123c;
+  --color-primary-soft: #fff1f2;
+  --color-primary-soft-hover: #ffe4e6;
+  --color-primary-strong: #be123c;
+}
+
+/* Dark theme. Driven by a `data-mode` attribute on <html> that the app resolves
+   from the user's Appearance setting (system → matches the OS). An inline script
+   in index.html sets it before first paint to avoid a flash. */
+:root[data-mode='dark'] {
+  --color-canvas: #0c0d10;
+  --color-surface: #17181c;
+  --color-surface-muted: #202127;
+  --color-surface-hover: #26272e;
+  --color-line: #2a2b31;
+  --color-content: #f4f4f5;
+  --color-content-muted: #b4b4bd;
+  --color-content-subtle: #909099;
+  --color-primary-soft: color-mix(in oklab, var(--color-primary-500) 20%, transparent);
+  --color-primary-soft-hover: color-mix(in oklab, var(--color-primary-500) 28%, transparent);
+  --color-primary-strong: var(--color-primary-300);
+
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-lift: 0 8px 30px rgba(0, 0, 0, 0.55);
+
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-canvas text-content font-sans antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+
+  :root {
+    color-scheme: light;
+  }
+
+  /* Visible keyboard focus for every interactive element (WCAG 2.4.7). Only
+     shows for keyboard/AT users thanks to :focus-visible. */
+  :where(a, button, input, select, textarea, [role='button'], [tabindex]):focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+  }
+}
+
+/* Respect the OS "reduce motion" setting everywhere, not just the FAB. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.tap-scale {
+  transition: transform 0.12s ease;
+}
+.tap-scale:active {
+  transform: scale(0.97);
+}
+
+/* Celebratory pop when an item is checked off while shopping. */
+@keyframes check-pop {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.check-pop {
+  animation: check-pop 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.list-leave-active {
+  position: absolute;
+  width: 100%;
+}
