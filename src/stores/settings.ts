@@ -15,6 +15,7 @@ const defaults: Settings = {
   theme: DEFAULT_THEME,
   mode: DEFAULT_THEME_MODE,
   categoryOrder: [],
+  installPromptDismissed: false,
 }
 
 export const useSettingsStore = defineStore('settings', () => {
@@ -61,6 +62,10 @@ export const useSettingsStore = defineStore('settings', () => {
     settings.value.categoryOrder = [...order]
   }
 
+  function setInstallPromptDismissed(value: boolean) {
+    settings.value.installPromptDismissed = value
+  }
+
   /** Replace the whole settings object (used by data import). */
   function replaceAll(next: Partial<Settings>) {
     settings.value = { ...defaults, ...next }
@@ -79,6 +84,7 @@ export const useSettingsStore = defineStore('settings', () => {
     setTheme,
     setMode,
     setCategoryOrder,
+    setInstallPromptDismissed,
     replaceAll,
   }
 })

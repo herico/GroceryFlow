@@ -1,5 +1,5 @@
-self.__BUILD_ID__ = "92abc27e07a4";
-self.__PRECACHE__ = ["./","assets/BaseButton-B5IcmNDb.css","assets/BaseButton-uCdvvlVJ.js","assets/BudgetBar-BTnmb-JX.css","assets/BudgetBar-CegWkWcH.js","assets/Favorites-DuEVwes1.js","assets/Home-CTKRDgEG.js","assets/Home-CZ8od_WF.css","assets/List-CbpGmAii.css","assets/List-CbyxW1tT.js","assets/ProgressBar-DMWU0cdc.js","assets/Settings-CPuG6-7k.js","assets/Shopping-B32dIquD.js","assets/index-DfojqPbC.js","assets/index-DryZFYsa.css","assets/lists-1ipU2EqZ.js","favicon.svg","icon-192.png","icon-512.png","icon-maskable-512.png","icons.svg","index.html","manifest.webmanifest"];
+self.__BUILD_ID__ = "b509b9134131";
+self.__PRECACHE__ = ["./","assets/BudgetBar-BTnmb-JX.css","assets/BudgetBar-UjVxFh9o.js","assets/Favorites-bjykp-pd.js","assets/Home-CZ8od_WF.css","assets/Home-Dx5BAxNN.js","assets/List-CbpGmAii.css","assets/List-CmFxo4pw.js","assets/PageHeader-LAqqzRbL.js","assets/ProgressBar-BNHDelMK.js","assets/Settings-CMCmrd5Q.js","assets/Shopping--1pPnqyG.js","assets/index-BYhn_A5y.css","assets/index-mPTd2X-O.js","assets/lists-BVSYmx0N.js","favicon.svg","icon-192.png","icon-512.png","icon-maskable-512.png","icons.svg","index.html","manifest.webmanifest"];
 /* GroceryFlow service worker — offline-first app shell.
  * Dependency-free so it works regardless of the build tooling version.
  * The full list of built assets (all lazy route chunks included) is injected

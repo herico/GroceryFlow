@@ -59,4 +59,6 @@ export interface Settings {
   mode: AppThemeMode
   /** Custom category display order (category ids). Empty = default order. */
   categoryOrder: string[]
+  /** User dismissed the install education prompt and should not be auto-reminded. */
+  installPromptDismissed: boolean
 }

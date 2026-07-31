@@ -10,6 +10,7 @@ import { SUPPORTED_LOCALES, LOCALE_LABELS } from '@/i18n'
 import { THEMES, THEME_MODES, THEME_SWATCHES } from '@/services/theme'
 import { OTHERS_CATEGORY_ID } from '@/services/categories.data'
 import { downloadBackup, parseBackup, restoreBackup } from '@/services/backup'
+import { useInstallPrompt } from '@/services/installPrompt'
 import PageHeader from '@/components/layout/PageHeader.vue'
 import AppIcon from '@/components/ui/AppIcon.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
@@ -21,6 +22,7 @@ const settings = useSettingsStore()
 const categories = useCategoriesStore()
 const items = useItemsStore()
 const notifications = useNotificationsStore()
+const { helpAvailable, openSheet: openInstallPromptSheet } = useInstallPrompt()
 
 const sortOptions = computed<{ value: SortMode; label: string }[]>(() => [
   { value: 'category', label: t('sort.category') },
@@ -127,6 +129,10 @@ async function onImportFile(event: Event) {
   }
   if (!confirm(t('settings.importConfirm'))) return
   restoreBackup(backup)
+}
+
+function openInstallHelp() {
+  openInstallPromptSheet()
 }
 </script>
 
@@ -328,6 +334,17 @@ async function onImportFile(event: Event) {
       <section class="rounded-2xl border border-line bg-surface p-4 shadow-soft">
         <h2 class="text-sm font-semibold text-content-muted">{{ t('settings.data') }}</h2>
         <p class="mb-3 mt-0.5 text-xs text-content-subtle">{{ t('settings.dataHint') }}</p>
+        <button
+          v-if="helpAvailable"
+          class="tap-scale mb-3 flex w-full items-center justify-between rounded-xl border border-line bg-surface-muted px-3 py-2.5 text-left"
+          @click="openInstallHelp"
+        >
+          <div>
+            <p class="text-sm font-medium text-content">{{ t('settings.installApp') }}</p>
+            <p class="text-xs text-content-subtle">{{ t('settings.installAppHint') }}</p>
+          </div>
+          <AppIcon name="download" :size="18" class="text-primary-strong" />
+        </button>
         <div class="flex gap-2">
           <BaseButton variant="soft" block @click="exportData">
             <AppIcon name="download" :size="18" /> {{ t('settings.exportData') }}

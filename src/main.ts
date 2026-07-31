@@ -6,6 +6,7 @@ import { router } from './router'
 import { i18n } from './i18n'
 import { initTheme } from './services/theme'
 import { runMigrations } from './services/migrations'
+import { initInstallPrompt } from './services/installPrompt'
 import { useNotificationsStore } from './stores/notifications'
 
 // Migrate any older persisted data forward before the stores read it.
@@ -14,6 +15,10 @@ initTheme()
 
 const pinia = createPinia()
 createApp(App).use(pinia).use(i18n).use(router).mount('#app')
+
+if (import.meta.env.PROD) {
+  initInstallPrompt(pinia)
+}
 
 // Register the offline service worker in production builds only.
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
